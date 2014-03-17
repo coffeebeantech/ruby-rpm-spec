@@ -1,0 +1,3 @@
+%__rubygems_requires	%{_rpmconfigdir}/rubygems.req
+%__rubygems_provides	%{_rpmconfigdir}/rubygems.prov
+%__rubygems_path	^%{gem_spec}$

@@ -1,0 +1,3 @@
+# Run this command to build:
+
+$ cd ~/rpmbuild-ruby/ && rm -rf BUILDROOT/* BUILD/* RPMS/x86_64/* RPMS/noarch/* && cd SPECS/ && rpmbuild -ba --buildroot=/home/ec2-user/rpmbuild-ruby/BUILDROOT --define='_topdir /home/ec2-user/rpmbuild-ruby' --sign ruby.spec

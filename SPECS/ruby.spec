@@ -151,18 +151,19 @@ Requires: rubygem(bigdecimal) >= %{bigdecimal_version}
 
 BuildRequires: autoconf
 BuildRequires: gdbm-devel
-#BuildRequires: libdb-devel
+# BuildRequires: libdb-devel
 BuildRequires: libffi-devel
 BuildRequires: openssl-devel
 BuildRequires: libyaml-devel
 BuildRequires: readline-devel
-#BuildRequires: tk-devel
+# BuildRequires: tk-devel
 # Needed to pass test_set_program_name(TestRubyOptions)
 BuildRequires: procps
-#BuildRequires: %{_bindir}/dtrace
+# BuildRequires: %{_bindir}/dtrace
 # RubyGems test suite optional dependencies.
-BuildRequires: %{_bindir}/git
-#BuildRequires: %{_bindir}/cmake
+# BuildRequires: %{_bindir}/git
+# BuildRequires: %{_bindir}/cmake
+# BuildRequires: doxygen
 
 # This package provides %%{_bindir}/ruby-mri therefore it is marked by this
 # virtual provide. It can be installed as dependency of rubypick.
@@ -381,14 +382,14 @@ serialize and de-serialize most Ruby objects to and from the YAML format.
 # %%pacakge -n rubygem-test-unit
 
 
-%package tcltk
-Summary:    Tcl/Tk interface for scripting language Ruby
-Group:      Development/Languages
-Requires:   %{name}-libs%{?_isa} = %{ruby_version}
-Provides:   ruby(tcltk) = %{ruby_version}-%{release}
+# %package tcltk
+# Summary:    Tcl/Tk interface for scripting language Ruby
+# Group:      Development/Languages
+# Requires:   %{name}-libs%{?_isa} = %{ruby_version}
+# Provides:   ruby(tcltk) = %{ruby_version}-%{release}
 
-%description tcltk
-Tcl/Tk interface for the object-oriented scripting language Ruby.
+# %description tcltk
+# Tcl/Tk interface for the object-oriented scripting language Ruby.
 
 %prep
 %setup -q -n %{ruby_archive}
@@ -431,6 +432,7 @@ autoconf
         --with-ruby-version='' \
         --enable-multiarch \
         --with-prelude=./abrt_prelude.rb \
+        --disable-install-capi \
 
 # Q= makes the build output more verbose and allows to check Fedora
 # compiler options.
@@ -439,6 +441,9 @@ make %{?_smp_mflags} COPY="cp -p" Q=
 %install
 rm -rf %{buildroot}
 make install DESTDIR=%{buildroot}
+
+# We package these doc files as part of the -doc subpackage
+# rm -rf %{buildroot}%{_datadir}/doc/%{name}
 
 # Rename ruby/config.h to ruby/config-<arch>.h to avoid file conflicts on
 # multilib systems and install config.h wrapper
@@ -638,10 +643,10 @@ OPENSSL_ENABLE_MD5_VERIFY=1 make check TESTS="-v $DISABLE_TESTS"
 # Platform independent libraries.
 %dir %{ruby_libdir}
 %{ruby_libdir}/*.rb
-%exclude %{ruby_libdir}/*-tk.rb
+# %exclude %{ruby_libdir}/*-tk.rb
 %exclude %{ruby_libdir}/irb.rb
-%exclude %{ruby_libdir}/tcltk.rb
-%exclude %{ruby_libdir}/tk*.rb
+# %exclude %{ruby_libdir}/tcltk.rb
+# %exclude %{ruby_libdir}/tk*.rb
 %{ruby_libdir}/cgi
 %{ruby_libdir}/date
 %{ruby_libdir}/digest
@@ -654,7 +659,7 @@ OPENSSL_ENABLE_MD5_VERIFY=1 make check TESTS="-v $DISABLE_TESTS"
 %{ruby_libdir}/net
 %{ruby_libdir}/openssl
 %{ruby_libdir}/optparse
-%{ruby_libdir}/psych
+# %{ruby_libdir}/psych
 %{ruby_libdir}/racc
 %{ruby_libdir}/rbconfig
 %{ruby_libdir}/rexml
@@ -664,8 +669,8 @@ OPENSSL_ENABLE_MD5_VERIFY=1 make check TESTS="-v $DISABLE_TESTS"
 %{ruby_libdir}/shell
 %{ruby_libdir}/syslog
 %{ruby_libdir}/test
-%exclude %{ruby_libdir}/tk
-%exclude %{ruby_libdir}/tkextlib
+# %exclude %{ruby_libdir}/tk
+# %exclude %{ruby_libdir}/tkextlib
 %{ruby_libdir}/uri
 %{ruby_libdir}/webrick
 %{ruby_libdir}/xmlrpc
@@ -770,9 +775,9 @@ OPENSSL_ENABLE_MD5_VERIFY=1 make check TESTS="-v $DISABLE_TESTS"
 %{ruby_libarchdir}/stringio.so
 %{ruby_libarchdir}/strscan.so
 %{ruby_libarchdir}/syslog.so
-%exclude %{ruby_libarchdir}/tcltklib.so
+# %exclude %{ruby_libarchdir}/tcltklib.so
 %{ruby_libarchdir}/thread.so
-%exclude %{ruby_libarchdir}/tkutil.so
+# %exclude %{ruby_libarchdir}/tkutil.so
 %{ruby_libarchdir}/zlib.so
 
 %{tapset_root}
@@ -839,6 +844,7 @@ OPENSSL_ENABLE_MD5_VERIFY=1 make check TESTS="-v $DISABLE_TESTS"
 %lang(ja) %doc README.ja
 %doc ChangeLog
 %doc doc/ChangeLog-*
+# %doc doc/capi/html
 %doc ruby-exercise.stp
 %{_datadir}/ri
 
@@ -873,14 +879,14 @@ OPENSSL_ENABLE_MD5_VERIFY=1 make check TESTS="-v $DISABLE_TESTS"
 %{gem_dir}/gems/psych-%{psych_version}
 %{gem_dir}/specifications/psych-%{psych_version}.gemspec
 
-%files tcltk
-%{ruby_libdir}/*-tk.rb
-%{ruby_libdir}/tcltk.rb
-%{ruby_libdir}/tk*.rb
-%{ruby_libarchdir}/tcltklib.so
-%{ruby_libarchdir}/tkutil.so
-%{ruby_libdir}/tk
-%{ruby_libdir}/tkextlib
+# %files tcltk
+# %{ruby_libdir}/*-tk.rb
+# %{ruby_libdir}/tcltk.rb
+# %{ruby_libdir}/tk*.rb
+# %{ruby_libarchdir}/tcltklib.so
+# %{ruby_libarchdir}/tkutil.so
+# %{ruby_libdir}/tk
+# %{ruby_libdir}/tkextlib
 
 %changelog
 * Wed Mar 05 2014 Vít Ondruch <vondruch@redhat.com> - 2.1.1-18

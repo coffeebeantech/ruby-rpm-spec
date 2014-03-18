@@ -1,3 +1,4 @@
+# This is the ruby root folder.
 %ruby_libdir %{_datadir}/%{name}
 %ruby_libarchdir %{_libdir}/%{name}
 

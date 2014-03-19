@@ -9,7 +9,8 @@
 %global ruby_release %{ruby_version}
 
 %global base_name ruby
-%global base_version %{major_version}%{minor_version}
+%global name_suffix %{major_version}%{minor_version}
+%global ruby_suffix %{major_minor_version}
 
 # Specify the named version. It has precedense to revision.
 #%%global milestone preview2
@@ -65,7 +66,7 @@
 %endif
 
 Summary: An interpreter of object-oriented scripting language
-Name: ruby%{?base_version}
+Name: ruby%{?name_suffix}
 Version: %{ruby_version}
 Release: %{release_string}
 Group: Development/Languages
@@ -200,7 +201,7 @@ Provides:   ruby(release) = %{ruby_release}
 This package includes the libruby, necessary to run Ruby.
 
 # TODO: Rename or not rename to ruby-rubygems?
-%package -n rubygems%{?base_version}
+%package -n rubygems%{?name_suffix}
 Summary:    The Ruby standard for packaging ruby libraries
 Version:    %{rubygems_version}
 Group:      Development/Libraries
@@ -213,12 +214,12 @@ Provides:   gem = %{version}-%{release}
 Provides:   ruby(rubygems) = %{version}-%{release}
 BuildArch:  noarch
 
-%description -n rubygems%{?base_version}
+%description -n rubygems%{?name_suffix}
 RubyGems is the Ruby standard for publishing and managing third party
 libraries.
 
 
-%package -n rubygems%{?base_version}-devel
+%package -n rubygems%{?name_suffix}-devel
 Summary:    Macros and development tools for packaging RubyGems
 Version:    %{rubygems_version}
 Group:      Development/Libraries
@@ -226,11 +227,11 @@ License:    Ruby or MIT
 Requires:   ruby(rubygems) = %{version}-%{release}
 BuildArch:  noarch
 
-%description -n rubygems%{?base_version}-devel
+%description -n rubygems%{?name_suffix}-devel
 Macros and development tools for packaging RubyGems.
 
 
-%package -n rubygem%{?base_version}-rake
+%package -n rubygem%{?name_suffix}-rake
 Summary:    Ruby based make-like utility
 Version:    %{rake_version}
 Group:      Development/Libraries
@@ -241,7 +242,7 @@ Provides:   rake = %{version}-%{release}
 Provides:   rubygem(rake) = %{version}-%{release}
 BuildArch:  noarch
 
-%description -n rubygem%{?base_version}-rake
+%description -n rubygem%{?name_suffix}-rake
 Rake is a Make-like program implemented in Ruby. Tasks and dependencies are
 specified in standard Ruby syntax.
 
@@ -260,7 +261,7 @@ The irb is acronym for Interactive Ruby.  It evaluates ruby expression
 from the terminal.
 
 
-%package -n rubygem%{?base_version}-rdoc
+%package -n rubygem%{?name_suffix}-rdoc
 Summary:    A tool to generate HTML and command-line documentation for Ruby projects
 Version:    %{rdoc_version}
 Group:      Development/Libraries
@@ -274,7 +275,7 @@ Provides:   ri = %{version}-%{release}
 Provides:   rubygem(rdoc) = %{version}-%{release}
 BuildArch:  noarch
 
-%description -n rubygem%{?base_version}-rdoc
+%description -n rubygem%{?name_suffix}-rdoc
 RDoc produces HTML and command-line documentation for Ruby projects.  RDoc
 includes the 'rdoc' and 'ri' tools for generating and displaying online
 documentation.
@@ -283,14 +284,14 @@ documentation.
 %package doc
 Summary:    Documentation for %{name}
 Group:      Documentation
-Requires:   %{_bindir}/ri%{major_minor_version}
+Requires:   %{_bindir}/ri
 BuildArch:  noarch
 
 %description doc
 This package contains documentation for %{name}.
 
 
-%package -n rubygem%{?base_version}-bigdecimal
+%package -n rubygem%{?name_suffix}-bigdecimal
 Summary:    BigDecimal provides arbitrary-precision floating point decimal arithmetic
 Version:    %{bigdecimal_version}
 Group:      Development/Libraries
@@ -299,7 +300,7 @@ Requires:   ruby(release)
 Requires:   ruby(rubygems) >= %{rubygems_version}
 Provides:   rubygem(bigdecimal) = %{version}-%{release}
 
-%description -n rubygem%{?base_version}-bigdecimal
+%description -n rubygem%{?name_suffix}-bigdecimal
 Ruby provides built-in support for arbitrary precision integer arithmetic.
 For example:
 
@@ -312,7 +313,7 @@ floating point arithmetic often introduces subtle errors because of the
 conversion between base 10 and base 2.
 
 
-%package -n rubygem%{?base_version}-io-console
+%package -n rubygem%{?name_suffix}-io-console
 Summary:    IO/Console is a simple console utilizing library
 Version:    %{io_console_version}
 Group:      Development/Libraries
@@ -320,12 +321,12 @@ Requires:   ruby(release)
 Requires:   ruby(rubygems) >= %{rubygems_version}
 Provides:   rubygem(io-console) = %{version}-%{release}
 
-%description -n rubygem%{?base_version}-io-console
+%description -n rubygem%{?name_suffix}-io-console
 IO/Console provides very simple and portable access to console. It doesn't
 provide higher layer features, such like curses and readline.
 
 
-%package -n rubygem%{?base_version}-json
+%package -n rubygem%{?name_suffix}-json
 Summary:    This is a JSON implementation as a Ruby extension in C
 Version:    %{json_version}
 Group:      Development/Libraries
@@ -334,14 +335,14 @@ Requires:   ruby(release)
 Requires:   ruby(rubygems) >= %{rubygems_version}
 Provides:   rubygem(json) = %{version}-%{release}
 
-%description -n rubygem%{?base_version}-json
+%description -n rubygem%{?name_suffix}-json
 This is a implementation of the JSON specification according to RFC 4627.
 You can think of it as a low fat alternative to XML, if you want to store
 data to disk or transmit it over a network rather than use a verbose
 markup language.
 
 
-%package -n rubygem%{?base_version}-minitest
+%package -n rubygem%{?name_suffix}-minitest
 Summary:    Minitest provides a complete suite of testing facilities
 Version:    %{minitest_version}
 Group:      Development/Libraries
@@ -351,7 +352,7 @@ Requires:   ruby(rubygems) >= %{rubygems_version}
 Provides:   rubygem(minitest) = %{version}-%{release}
 BuildArch:  noarch
 
-%description -n rubygem%{?base_version}-minitest
+%description -n rubygem%{?name_suffix}-minitest
 minitest/unit is a small and incredibly fast unit testing framework.
 
 minitest/spec is a functionally complete spec engine.
@@ -366,7 +367,7 @@ minitest/pride shows pride in testing and adds coloring to your test
 output.
 
 
-%package -n rubygem%{?base_version}-psych
+%package -n rubygem%{?name_suffix}-psych
 Summary:    A libyaml wrapper for Ruby
 Version:    %{psych_version}
 Group:      Development/Libraries
@@ -375,7 +376,7 @@ Requires:   ruby(release)
 Requires:   ruby(rubygems) >= %{rubygems_version}
 Provides:   rubygem(psych) = %{version}-%{release}
 
-%description -n rubygem%{?base_version}-psych
+%description -n rubygem%{?name_suffix}-psych
 Psych is a YAML parser and emitter. Psych leverages
 libyaml[http://pyyaml.org/wiki/LibYAML] for its YAML parsing and emitting
 capabilities. In addition to wrapping libyaml, Psych also knows how to
@@ -436,7 +437,7 @@ autoconf
         --enable-multiarch \
         --with-prelude=./abrt_prelude.rb \
         --disable-install-capi \
-        --program-suffix=%{major_minor_version} \
+        --program-suffix=%{?ruby_suffix} \
 
 # Q= makes the build output more verbose and allows to check Fedora
 # compiler options.
@@ -605,9 +606,9 @@ OPENSSL_ENABLE_MD5_VERIFY=1 make check TESTS="-v $DISABLE_TESTS"
 %lang(ja) %doc COPYING.ja
 %doc GPL
 %doc LEGAL
-%{_bindir}/erb%{major_minor_version}
-%{_bindir}/%{base_name}%{major_minor_version}%{?with_rubypick:-mri}
-%{_bindir}/testrb%{major_minor_version}
+%{_bindir}/erb%{?ruby_suffix}
+%{_bindir}/%{base_name}%{?ruby_suffix}%{?with_rubypick:-mri}
+%{_bindir}/testrb%{?ruby_suffix}
 %{_mandir}/man1/erb*
 %{_mandir}/man1/ruby*
 
@@ -795,8 +796,8 @@ OPENSSL_ENABLE_MD5_VERIFY=1 make check TESTS="-v $DISABLE_TESTS"
 %dir %{gem_dir}/specifications/default
 %{gem_dir}/specifications/default/test-unit-*.gemspec
 
-%files -n rubygems%{?base_version}
-%{_bindir}/gem%{major_minor_version}
+%files -n rubygems%{?name_suffix}
+%{_bindir}/gem%{?ruby_suffix}
 %{rubygems_dir}
 %{gem_dir}
 %exclude %{gem_dir}/gems/*
@@ -818,27 +819,27 @@ OPENSSL_ENABLE_MD5_VERIFY=1 make check TESTS="-v $DISABLE_TESTS"
 # TODO where to put test-unit-*.gemspec??
 %exclude %{gem_dir}/specifications/default/test-unit-*.gemspec
 
-%files -n rubygems%{?base_version}-devel
+%files -n rubygems%{?name_suffix}-devel
 %{_rpmconfigdir}/macros.d/macros.rubygems
 %{_rpmconfigdir}/fileattrs/rubygems.attr
 %{_rpmconfigdir}/rubygems.req
 %{_rpmconfigdir}/rubygems.prov
 
-%files -n rubygem%{?base_version}-rake
-%{_bindir}/rake%{major_minor_version}
+%files -n rubygem%{?name_suffix}-rake
+%{_bindir}/rake%{?ruby_suffix}
 %{gem_dir}/gems/rake-%{rake_version}
 %{gem_dir}/specifications/rake-%{rake_version}.gemspec
 %{_mandir}/man1/rake*
 
 %files irb
-%{_bindir}/irb%{major_minor_version}
+%{_bindir}/irb%{?ruby_suffix}
 %{ruby_libdir}/irb.rb
 %{ruby_libdir}/irb
 %{_mandir}/man1/irb*
 
-%files -n rubygem%{?base_version}-rdoc
-%{_bindir}/rdoc%{major_minor_version}
-%{_bindir}/ri%{major_minor_version}
+%files -n rubygem%{?name_suffix}-rdoc
+%{_bindir}/rdoc%{?ruby_suffix}
+%{_bindir}/ri%{?ruby_suffix}
 %{gem_dir}/gems/rdoc-%{rdoc_version}
 %{gem_dir}/specifications/rdoc-%{rdoc_version}.gemspec
 %{_mandir}/man1/ri*
@@ -852,30 +853,30 @@ OPENSSL_ENABLE_MD5_VERIFY=1 make check TESTS="-v $DISABLE_TESTS"
 %doc ruby-exercise.stp
 %{_datadir}/ri
 
-%files -n rubygem%{?base_version}-bigdecimal
+%files -n rubygem%{?name_suffix}-bigdecimal
 %{ruby_libdir}/bigdecimal
 %{ruby_libarchdir}/bigdecimal.so
 %{_libdir}/gems/%{base_name}/bigdecimal-%{bigdecimal_version}
 %{gem_dir}/gems/bigdecimal-%{bigdecimal_version}
 %{gem_dir}/specifications/bigdecimal-%{bigdecimal_version}.gemspec
 
-%files -n rubygem%{?base_version}-io-console
+%files -n rubygem%{?name_suffix}-io-console
 %{ruby_libdir}/io
 %{ruby_libarchdir}/io/console.so
 %{_libdir}/gems/%{base_name}/io-console-%{io_console_version}
 %{gem_dir}/gems/io-console-%{io_console_version}
 %{gem_dir}/specifications/io-console-%{io_console_version}.gemspec
 
-%files -n rubygem%{?base_version}-json
+%files -n rubygem%{?name_suffix}-json
 %{_libdir}/gems/%{base_name}/json-%{json_version}
 %{gem_dir}/gems/json-%{json_version}
 %{gem_dir}/specifications/json-%{json_version}.gemspec
 
-%files -n rubygem%{?base_version}-minitest
+%files -n rubygem%{?name_suffix}-minitest
 %{gem_dir}/gems/minitest-%{minitest_version}
 %{gem_dir}/specifications/minitest-%{minitest_version}.gemspec
 
-%files -n rubygem%{?base_version}-psych
+%files -n rubygem%{?name_suffix}-psych
 %{ruby_vendorlibdir}/psych
 %{ruby_vendorlibdir}/psych.rb
 %{ruby_vendorarchdir}/psych.so

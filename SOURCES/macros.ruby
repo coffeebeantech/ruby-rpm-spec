@@ -1,11 +1,11 @@
 # This is the ruby root folder.
-%ruby_libdir %{_datadir}/%{name}
-%ruby_libarchdir %{_libdir}/%{name}
+%ruby_libdir %{_datadir}/%{base_name}
+%ruby_libarchdir %{_libdir}/%{base_name}
 
 # This is the local lib/arch and should not be used for packaging.
 %ruby_sitedir site_ruby
-%ruby_sitelibdir %{_prefix}/local/share/%{name}/%{ruby_sitedir}
-%ruby_sitearchdir %{_prefix}/local/%{_lib}/%{name}/%{ruby_sitedir}
+%ruby_sitelibdir %{_prefix}/local/share/%{base_name}/%{ruby_sitedir}
+%ruby_sitearchdir %{_prefix}/local/%{_lib}/%{base_name}/%{ruby_sitedir}
 
 # This is the general location for libs/archs compatible with all
 # or most of the Ruby versions available in the Fedora repositories.

@@ -12,11 +12,11 @@ Ruby 2.1.1
 
 Move the repository contents for an directory like that:
 
-    /home/ec2-user/packaging/ruby
+    /home/ec2-user/packaging/ruby-rpm-spec
 
 And run rpmbuild:
 
-    cd /home/ec2-user/packaging/ruby && rm -rf BUILDROOT/* BUILD/* RPMS/x86_64/* RPMS/noarch/* && cd SPECS/ && rpmbuild -ba --buildroot=/home/ec2-user/packaging/ruby/BUILDROOT --define='_topdir /home/ec2-user/packaging/ruby' --sign ruby.spec
+    cd /home/ec2-user/packaging/ruby-rpm-spec && rm -rf BUILDROOT/* BUILD/* RPMS/x86_64/* RPMS/noarch/* && cd SPECS/ && rpmbuild -ba --buildroot=/home/ec2-user/packaging/ruby-rpm-spec/BUILDROOT --define='_topdir /home/ec2-user/packaging/ruby-rpm-spec' --sign ruby.spec
     
 **Important**: if you try to rebuild the spec with the generated ruby and rubygems RPMs already installed on the system, you'll get and error regarding the gems directory. In this case, you need first to remove the RPMs and then build and install the new ones. There is some compatibility issue building this spec with the packages already installed. If you know why please tell me :)
 

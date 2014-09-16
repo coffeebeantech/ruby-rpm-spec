@@ -1,7 +1,7 @@
 %global major_version 2
 %global minor_version 1
-%global teeny_version 1
-%global patch_level 76
+%global teeny_version 2
+%global patch_level 95
 
 %global major_minor_version %{major_version}.%{minor_version}
 
@@ -32,7 +32,7 @@
 %endif
 
 
-%global release 18
+%global release 24
 %{!?release_string:%global release_string %{?development_release:0.}%{release}%{?development_release:.%{development_release}}%{?dist}}
 
 %global rubygems_version 2.2.2
@@ -49,7 +49,7 @@
 %global io_console_version 0.4.2
 %global json_version 1.8.1
 %global minitest_version 4.7.5
-%global psych_version 2.0.3
+%global psych_version 2.0.5
 %global rake_version 10.1.0
 %global rdoc_version 4.1.0
 
@@ -894,8 +894,34 @@ OPENSSL_ENABLE_MD5_VERIFY=1 make check TESTS="-v $DISABLE_TESTS"
 # %{ruby_libdir}/tkextlib
 
 %changelog
-* Wed Mar 05 2014 Vít Ondruch <vondruch@redhat.com> - 2.1.1-18
+* Mon Aug 18 2014 Fedora Release Engineering <rel-eng@lists.fedoraproject.org>
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_21_22_Mass_Rebuild
+
+* Tue Jun 24 2014 Peter Robinson <pbrobinson@fedoraproject.org> 2.1.2-23
+- Fix FTBFS
+- Specify tcl/tk 8.6
+- Add upstream patch to build with libffi 3.1
+
+* Sun Jun 08 2014 Fedora Release Engineering <rel-eng@lists.fedoraproject.org>
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_21_Mass_Rebuild
+
+* Wed May 21 2014 Jaroslav Škarvada <jskarvad@redhat.com>
+- Rebuilt for https://fedoraproject.org/wiki/Changes/f21tcl86
+
+* Tue May 20 2014 Josef Stribny <jstribny@redhat.com> - 2.1.2-21
+- Update to Ruby 2.1.2
+
+* Tue May 06 2014 Vít Ondruch <vondruch@redhat.com> - 2.1.1-20
+- Remove useless exclude (rhbz#1065897).
+- Extract load macro into external file and include it.
+- Kill bundled certificates.
+
+* Wed Apr 23 2014 Vít Ondruch <vondruch@redhat.com> - 2.1.1-19
+- Correctly expand $(prefix) in some Makefiles, e.g. eruby.
+
+* Tue Apr 08 2014 Vít Ondruch <vondruch@redhat.com> - 2.1.1-18
 - Update to Ruby 2.1.1.
+- Revert regression of Hash#reject.
 
 * Mon Mar 03 2014 Vít Ondruch <vondruch@redhat.com> - 2.1.0-19
 - Add RPM dependency generators for RubyGems.

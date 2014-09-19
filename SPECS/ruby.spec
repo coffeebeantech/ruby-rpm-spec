@@ -1,7 +1,7 @@
 %global major_version 2
 %global minor_version 1
-%global teeny_version 2
-%global patch_level 95
+%global teeny_version 3
+%global patch_level 242
 
 %global major_minor_version %{major_version}.%{minor_version}
 

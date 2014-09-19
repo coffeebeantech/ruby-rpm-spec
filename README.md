@@ -2,11 +2,11 @@
 
 This spec is an attempt to keep Ruby updated to the latest stable version available and to be used on Amazon AWS infrastructure.
 
-It specifies a new set of Ruby RPMs using a suffix, like ruby21-2.1.2-95.amzn1.x86_64.rpm (and executables ruby2.1). It allows to install a new ruby version keeping old versions running at the same time.
+It specifies a new set of Ruby RPMs using a suffix, like ruby21-2.1.3-242.amzn1.x86_64.rpm (and executables ruby2.1). It allows to install a new ruby version keeping old versions running at the same time.
 
 # What is the current version?
 
-Ruby 2.1.2
+Ruby 2.1.3
 
 # How to build?
 
@@ -22,7 +22,7 @@ And run rpmbuild:
 
 # How to install?
 
-    sudo rpm -ivh noarch/rubygem21-rdoc-4.1.0-24.amzn1.noarch.rpm x86_64/* noarch/rubygems21-2.2.2-24.amzn1.noarch.rpm noarch/ruby21-irb-2.1.2-24.amzn1.noarch.rpm
+    sudo rpm -ivh noarch/rubygem21-rdoc-4.1.0-24.amzn1.noarch.rpm x86_64/* noarch/rubygems21-2.2.2-24.amzn1.noarch.rpm noarch/ruby21-irb-2.1.3-24.amzn1.noarch.rpm
 
 # Sources
 

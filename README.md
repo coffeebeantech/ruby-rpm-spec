@@ -6,7 +6,7 @@ It specifies a new set of Ruby RPMs using a suffix, like ruby21-2.1.3-242.amzn1.
 
 # What is the current version?
 
-Ruby 2.1.3
+Ruby 2.1.5
 
 # How to build?
 

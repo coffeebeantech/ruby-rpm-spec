@@ -32,7 +32,7 @@
 %endif
 
 
-%global release 24
+%global release 25
 %{!?release_string:%global release_string %{?development_release:0.}%{release}%{?development_release:.%{development_release}}%{?dist}}
 
 %global rubygems_version 2.2.2

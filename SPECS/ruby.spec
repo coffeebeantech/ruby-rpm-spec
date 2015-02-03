@@ -284,7 +284,9 @@ documentation.
 %package doc
 Summary:    Documentation for %{name}
 Group:      Documentation
-Requires:   %{_bindir}/ri
+Requires:   ruby(release)
+Requires:   ruby(rubygems) >= %{rubygems_version}
+Provides:   rubygem(rdoc) = %{version}-%{release}
 BuildArch:  noarch
 
 %description doc

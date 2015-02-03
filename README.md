@@ -22,7 +22,7 @@ And run rpmbuild:
 
 # How to install?
 
-    sudo rpm -ivh noarch/rubygem21-rdoc-4.1.0-24.amzn1.noarch.rpm x86_64/* noarch/rubygems21-2.2.2-24.amzn1.noarch.rpm noarch/ruby21-irb-2.1.5-24.amzn1.noarch.rpm
+    sudo rpm -ivh noarch/rubygem21-rdoc-4.1.0-25.amzn1.noarch.rpm x86_64/* noarch/rubygems21-2.2.2-25.amzn1.noarch.rpm noarch/ruby21-irb-2.1.5-25.amzn1.noarch.rpm
 
 # Sources
 

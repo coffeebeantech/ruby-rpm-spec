@@ -1,5 +1,5 @@
-%define namesuffix 21
-%define rubysuffix 2.1
+%define namesuffix 23
+%define rubysuffix 2.3
 %define gemdir %(/usr/bin/ruby%{rubysuffix} -rubygems -e 'puts Gem.respond_to?(:default_dirs) && Gem.default_dirs[:system] && Gem.default_dirs[:system][:gem_dir] || Gem::dir' 2>/dev/null)
 %define gemname bundler
 %define geminstdir %{gemdir}/gems/%{gemname}-%{version}
@@ -8,7 +8,7 @@
 Summary: Bundler gem
 Name: rubygem%{namesuffix}-%{gemname}
 
-Version: 1.5.3
+Version: 1.14.6
 Release: 1%{?dist}
 Group: Development/Libraries
 License: MIT
@@ -24,7 +24,7 @@ Provides: rubygem(%{gemname}) = %{version}-%{release}
 Provides: rubygem-%{gemname} = %{version}-%{release}
 
 %description
-Bundler maintains a consistent environment for ruby applications. It tracks an application's code and the rubygems it needs to run, so that an application will always have the exact gems (and versions) that it needs to run. 
+Bundler maintains a consistent environment for ruby applications. It tracks an application's code and the rubygems it needs to run, so that an application will always have the exact gems (and versions) that it needs to run.
 
 
 
@@ -42,7 +42,7 @@ gem%{rubysuffix} install -V --local --install-dir "`pwd`/%{gemdir}" --force --rd
 rm -rf %{buildroot}
 mkdir -p %{buildroot}%{gemdir}
 cp -dpR .%{gemdir}/* %{buildroot}%{gemdir}/
-for f in .gitignore .rspec .travis.yml bundler.gemspec; do
+for f in .gitignore .rspec .travis.yml .codeclimate.yml .rubocop_todo.yml .rubocop.yml bundler.gemspec; do
     rm -f "%{buildroot}%{geminstdir}/$f"
 done
 
@@ -66,8 +66,7 @@ rm -rf %{buildroot}
 %{geminstdir}/Rakefile
 %{geminstdir}/lib
 %{geminstdir}/bin
-%doc %{geminstdir}/spec
-%doc %{gemdir}/doc/%{gemname}-%{version}
+%{geminstdir}/exe
 %doc %{geminstdir}/*.md
 %doc %{geminstdir}/man
 %{gemdir}/cache/%{gemname}-%{version}.gem

@@ -46,7 +46,7 @@ for f in .gitignore .rspec .travis.yml .codeclimate.yml .rubocop_todo.yml .ruboc
     rm -f "%{buildroot}%{geminstdir}/$f"
 done
 
-find %{buildroot}%{geminstdir}/bin -type f | xargs -n 1 sed -i -e 's"^#!/usr/bin/env ruby"#!%{_bindir}/ruby%{rubysuffix}"'
+find %{buildroot}%{geminstdir}/exe -type f | xargs -n 1 sed -i -e 's"^#!/usr/bin/env ruby"#!%{_bindir}/ruby%{rubysuffix}"'
 
 mkdir -p %{buildroot}/%{_bindir}
 mv %{buildroot}%{gemdir}/bin/* %{buildroot}%{_bindir}
@@ -63,9 +63,7 @@ rm -rf %{buildroot}
 %{_bindir}/bundle
 %{_bindir}/bundler
 %dir %{geminstdir}
-%{geminstdir}/Rakefile
 %{geminstdir}/lib
-%{geminstdir}/bin
 %{geminstdir}/exe
 %doc %{geminstdir}/*.md
 %doc %{geminstdir}/man

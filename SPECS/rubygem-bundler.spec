@@ -8,7 +8,7 @@
 Summary: Bundler gem
 Name: rubygem%{namesuffix}-%{gemname}
 
-Version: 1.14.6
+Version: 1.16.2
 Release: 1%{?dist}
 Group: Development/Libraries
 License: MIT

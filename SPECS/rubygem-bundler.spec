@@ -1,5 +1,5 @@
-%define namesuffix 23
-%define rubysuffix 2.3
+%define namesuffix 24
+%define rubysuffix 2.4
 %define gemdir %(/usr/bin/ruby%{rubysuffix} -rubygems -e 'puts Gem.respond_to?(:default_dirs) && Gem.default_dirs[:system] && Gem.default_dirs[:system][:gem_dir] || Gem::dir' 2>/dev/null)
 %define gemname bundler
 %define geminstdir %{gemdir}/gems/%{gemname}-%{version}
@@ -8,7 +8,7 @@
 Summary: Bundler gem
 Name: rubygem%{namesuffix}-%{gemname}
 
-Version: 1.16.2
+Version: 1.17.3
 Release: 1%{?dist}
 Group: Development/Libraries
 License: MIT

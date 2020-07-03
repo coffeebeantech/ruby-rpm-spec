@@ -1,0 +1,14 @@
+diff -ru a/test/ruby/test_process.rb b/test/ruby/test_process.rb
+--- a/test/ruby/test_process.rb	2020-05-05 16:02:00.748110859 +0000
++++ b/test/ruby/test_process.rb	2020-05-05 16:02:38.364295739 +0000
+@@ -108,7 +108,8 @@
+       :NPROC, "NPROC",
+       :RSS, "RSS",
+       :RTPRIO, "RTPRIO",
+-      :RTTIME, "RTTIME",
++      # RTTIME requires elevated privs during testing
++      #:RTTIME, "RTTIME",
+       :SBSIZE, "SBSIZE",
+       :SIGPENDING, "SIGPENDING",
+       :STACK, "STACK",
+Only in b/test/ruby: test_process.rb.orig

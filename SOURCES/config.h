@@ -44,6 +44,16 @@
 #include "ruby/config-sparc.h"
 #elif defined(__aarch64__)
 #include "ruby/config-aarch64.h"
+#elif defined(__mips64) && defined(__MIPSEL__)
+#include "ruby/config-mips64el.h"
+#elif defined(__mips64)
+#include "ruby/config-mips64.h"
+#elif defined(__mips) && defined(__MIPSEL__)
+#include "ruby/config-mipsel.h"
+#elif defined(__mips)
+#include "ruby/config-mips.h"
+#elif defined(__riscv64)
+#include "ruby/config-riscv64.h"
 #else
 #error "The ruby-devel package is not usable with the architecture."
 #endif

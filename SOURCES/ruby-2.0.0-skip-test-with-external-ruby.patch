@@ -1,0 +1,13 @@
+diff -ru a/test/rubygems/test_gem_ext_ext_conf_builder.rb b/test/rubygems/test_gem_ext_ext_conf_builder.rb
+--- a/test/rubygems/test_gem_ext_ext_conf_builder.rb	2020-05-05 16:03:11.140456801 +0000
++++ b/test/rubygems/test_gem_ext_ext_conf_builder.rb	2020-05-05 16:04:10.832750058 +0000
+@@ -139,6 +139,8 @@
+   end
+ 
+   def test_class_build_unconventional
++    skip("calls system binary during build test")
++
+     if vc_windows? && !nmake_found?
+       skip("test_class_build skipped - nmake not found")
+     end
+Only in b/test/rubygems: test_gem_ext_ext_conf_builder.rb.orig

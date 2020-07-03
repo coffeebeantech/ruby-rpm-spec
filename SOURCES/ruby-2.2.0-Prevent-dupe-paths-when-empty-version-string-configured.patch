@@ -1,0 +1,110 @@
+diff -ru a/configure.ac b/configure.ac
+--- a/configure.ac	2020-05-05 15:11:39.785085166 +0000
++++ b/configure.ac	2020-05-05 15:22:22.168302310 +0000
+@@ -4203,9 +4203,6 @@
+     rubyw_install_name='$(RUBYW_INSTALL_NAME)'
+     ])
+ 
+-rubylibdir='${rubylibprefix}/${ruby_version}'
+-rubyarchdir=${multiarch+'${rubyarchprefix}/${ruby_version}'}${multiarch-'${rubylibdir}/${arch}'}
+-
+ rubyarchprefix=${multiarch+'${archlibdir}/${RUBY_BASE_NAME}'}${multiarch-'${rubylibprefix}/${arch}'}
+ AC_ARG_WITH(rubyarchprefix,
+ 	    AS_HELP_STRING([--with-rubyarchprefix=DIR],
+@@ -4234,6 +4231,7 @@
+             [ruby_version=full])
+ unset RUBY_LIB_VERSION
+ unset RUBY_LIB_VERSION_STYLE
++ruby_version_suffix=/'${ruby_version}'
+ AS_CASE(["$ruby_version"],
+   [full],  [RUBY_LIB_VERSION_STYLE='3	/* full */'],
+   [minor], [RUBY_LIB_VERSION_STYLE='2	/* minor */'])
+@@ -4248,30 +4246,34 @@
+     ruby_version="`$CPP -I. -I"${srcdir}" -I"${srcdir}/include" conftest.c | sed '/^ruby_version=/!d;s/ //g'`"
+     eval $ruby_version
+ ], [test -z "${ruby_version}"], [
+-    AC_MSG_ERROR([No ruby version, No place for bundled libraries])
++    unset ruby_version_suffix
++    AC_DEFINE(RUBY_LIB_VERSION_BLANK, 1)
+ ], [
+     RUBY_LIB_VERSION="${ruby_version}"
+ ])
+ AC_SUBST(RUBY_LIB_VERSION_STYLE)
+ AC_SUBST(RUBY_LIB_VERSION)
+ 
++rubylibdir='${rubylibprefix}'${ruby_version_suffix}
++rubyarchdir=${multiarch+'${rubyarchprefix}'${ruby_version_suffix}}${multiarch-'${rubylibdir}/${arch}'}
++
+ AC_ARG_WITH(sitedir,
+ 	    AS_HELP_STRING([--with-sitedir=DIR], [site libraries in DIR [[RUBY_LIB_PREFIX/site_ruby]], "no" to disable site directory]),
+             [sitedir=$withval],
+             [sitedir='${rubylibprefix}/site_ruby'])
+-sitelibdir='${sitedir}/${ruby_version}'
++sitelibdir='${sitedir}'${ruby_version_suffix}
+ 
+ AC_ARG_WITH(sitearchdir,
+ 	    AS_HELP_STRING([--with-sitearchdir=DIR],
+ 			   [architecture dependent site libraries in DIR [[SITEDIR/SITEARCH]], "no" to disable site directory]),
+             [sitearchdir=$withval],
+-            [sitearchdir=${multiarch+'${rubysitearchprefix}/site_ruby/${ruby_version}'}${multiarch-'${sitelibdir}/${sitearch}'}])
++            [sitearchdir=${multiarch+'${rubysitearchprefix}/site_ruby'${ruby_version_suffix}}${multiarch-'${sitelibdir}/${sitearch}'}])
+ 
+ AC_ARG_WITH(vendordir,
+ 	    AS_HELP_STRING([--with-vendordir=DIR], [vendor libraries in DIR [[RUBY_LIB_PREFIX/vendor_ruby]], "no" to disable vendor directory]),
+             [vendordir=$withval],
+             [vendordir='${rubylibprefix}/vendor_ruby'])
+-vendorlibdir='${vendordir}/${ruby_version}'
++vendorlibdir='${vendordir}'${ruby_version_suffix}
+ 
+ AC_ARG_WITH(vendorarchdir,
+ 	    AS_HELP_STRING([--with-vendorarchdir=DIR],
+diff -ru a/loadpath.c b/loadpath.c
+--- a/loadpath.c	2020-05-05 15:11:39.761085047 +0000
++++ b/loadpath.c	2020-05-05 15:22:22.140302169 +0000
+@@ -65,22 +65,34 @@
+     RUBY_SEARCH_PATH "\0"
+ #endif
+ #ifndef NO_RUBY_SITE_LIB
++#ifdef RUBY_LIB_VERSION_BLANK
++    RUBY_SITE_LIB "\0"
++#else
+     RUBY_SITE_LIB2 "\0"
++#endif
+ #ifdef RUBY_THINARCH
+     RUBY_SITE_ARCH_LIB_FOR(RUBY_THINARCH) "\0"
+ #endif
+     RUBY_SITE_ARCH_LIB_FOR(RUBY_SITEARCH) "\0"
++#ifndef RUBY_LIB_VERSION_BLANK
+     RUBY_SITE_LIB "\0"
+ #endif
++#endif
+ 
+ #ifndef NO_RUBY_VENDOR_LIB
++#ifdef RUBY_LIB_VERSION_BLANK
++    RUBY_VENDOR_LIB "\0"
++#else
+     RUBY_VENDOR_LIB2 "\0"
++#endif
+ #ifdef RUBY_THINARCH
+     RUBY_VENDOR_ARCH_LIB_FOR(RUBY_THINARCH) "\0"
+ #endif
+     RUBY_VENDOR_ARCH_LIB_FOR(RUBY_SITEARCH) "\0"
++#ifndef RUBY_LIB_VERSION_BLANK
+     RUBY_VENDOR_LIB "\0"
+ #endif
++#endif
+ 
+     RUBY_LIB "\0"
+ #ifdef RUBY_THINARCH
+diff -ru a/tool/mkconfig.rb b/tool/mkconfig.rb
+--- a/tool/mkconfig.rb	2020-05-05 15:11:39.729084888 +0000
++++ b/tool/mkconfig.rb	2020-05-05 15:22:22.112302028 +0000
+@@ -111,7 +111,7 @@
+     val = val.gsub(/\$(?:\$|\{?(\w+)\}?)/) {$1 ? "$(#{$1})" : $&}.dump
+     case name
+     when /^prefix$/
+-      val = "(TOPDIR || DESTDIR + #{val})"
++      val = "(((TOPDIR && TOPDIR.empty?) ? nil : TOPDIR) || DESTDIR + #{val})"
+     when /^ARCH_FLAG$/
+       val = "arch_flag || #{val}" if universal
+     when /^UNIVERSAL_ARCHNAMES$/

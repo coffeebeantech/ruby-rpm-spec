@@ -1,0 +1,67 @@
+diff -ru a/test/rinda/test_rinda.rb b/test/rinda/test_rinda.rb
+--- a/test/rinda/test_rinda.rb	2020-05-05 16:05:29.209134973 +0000
++++ b/test/rinda/test_rinda.rb	2020-05-05 16:09:44.834389375 +0000
+@@ -647,6 +647,7 @@
+   end
+ 
+   def test_make_socket_ipv4_multicast
++    skip 'Disabled during build'
+     begin
+       v4mc = @rs.make_socket('239.0.0.1')
+     rescue Errno::ENOBUFS => e
+@@ -671,6 +672,7 @@
+   end
+ 
+   def test_make_socket_ipv6_multicast
++    skip 'Disabled during build'
+     skip 'IPv6 not available' unless
+       Socket.ip_address_list.any? { |addrinfo| addrinfo.ipv6? && !addrinfo.ipv6_loopback? }
+ 
+@@ -693,6 +695,7 @@
+   end
+ 
+   def test_ring_server_ipv4_multicast
++    skip 'Disabled during build'
+     @rs.shutdown
+     begin
+       @rs = Rinda::RingServer.new(@ts, [['239.0.0.1', '0.0.0.0']], @port)
+@@ -720,6 +723,7 @@
+   end
+ 
+   def test_ring_server_ipv6_multicast
++    skip 'Disabled during build'
+     skip 'IPv6 not available' unless
+       Socket.ip_address_list.any? { |addrinfo| addrinfo.ipv6? && !addrinfo.ipv6_loopback? }
+ 
+@@ -814,6 +818,7 @@
+   end
+ 
+   def test_make_socket_ipv4_multicast
++    skip 'Disabled during build'
+     v4mc = @rf.make_socket('239.0.0.1')
+ 
+     assert_equal(1, v4mc.getsockopt(:IPPROTO_IP, :IP_MULTICAST_LOOP).ipv4_multicast_loop)
+@@ -823,6 +828,7 @@
+   end
+ 
+   def test_make_socket_ipv6_multicast
++    skip 'Disabled during build'
+     ipv6_mc(@rf) do |v6mc|
+       assert_equal(1, v6mc.getsockopt(:IPPROTO_IPV6, :IPV6_MULTICAST_LOOP).int)
+       assert_equal(1, v6mc.getsockopt(:IPPROTO_IPV6, :IPV6_MULTICAST_HOPS).int)
+@@ -830,6 +836,7 @@
+   end
+ 
+   def test_make_socket_ipv4_multicast_hops
++    skip 'Disabled during build'
+     @rf.multicast_hops = 2
+     v4mc = @rf.make_socket('239.0.0.1')
+     assert_equal(2, v4mc.getsockopt(:IPPROTO_IP, :IP_MULTICAST_TTL).ipv4_multicast_ttl)
+@@ -838,6 +845,7 @@
+   end
+ 
+   def test_make_socket_ipv6_multicast_hops
++    skip 'Disabled during build'
+     ipv6_mc(@rf, 2) do |v6mc|
+       assert_equal(2, v6mc.getsockopt(:IPPROTO_IPV6, :IPV6_MULTICAST_HOPS).int)
+     end

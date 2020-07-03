@@ -1,34 +1,17 @@
 module Gem
   class << self
-
-    ##
-    # Returns full path of previous but one directory of dir in path
-    # E.g. for '/usr/share/ruby', 'ruby', it returns '/usr'
-
-    def previous_but_one_dir_to(path, dir)
-      split_path = path.split(File::SEPARATOR)
-      File.join(split_path.take_while { |one_dir| one_dir !~ /^#{dir}$/ }[0..-2])
-    end
-    private :previous_but_one_dir_to
-
-    ##
-    # Tries to detect, if arguments and environment variables suggest that
-    # 'gem install' is executed from rpmbuild.
-
-    def rpmbuild?
-      (ARGV.include?('--install-dir') || ARGV.include?('-i')) && ENV['RPM_PACKAGE_NAME']
-    end
-    private :rpmbuild?
-
     ##
     # Default gems locations allowed on FHS system (/usr, /usr/share).
     # The locations are derived from directories specified during build
     # configuration.
 
+    # rubygems defines the gem installation location location based off of
+    # vendorlibdir and sitelibdir which were defined during build. The only
+    # difference is instead of vendor_ruby or site_ruby the directory gems is used
     def default_locations
       @default_locations ||= {
-        :system => previous_but_one_dir_to(ConfigMap[:vendordir], ConfigMap[:RUBY_INSTALL_NAME]),
-        :local => previous_but_one_dir_to(ConfigMap[:sitedir], ConfigMap[:RUBY_INSTALL_NAME])
+        :system => ConfigMap[:vendorlibdir].gsub(/vendor_ruby/, "gems"),
+        :local => ConfigMap[:sitelibdir].gsub(/site_ruby/, "gems")
       }
     end
 
@@ -46,9 +29,12 @@ module Gem
 
       @default_dirs ||= Hash[default_locations.collect do |destination, path|
         [destination, {
-          :bin_dir => File.join(path, ConfigMap[:bindir].split(File::SEPARATOR).last),
-          :gem_dir => File.join(path, ConfigMap[:datadir].split(File::SEPARATOR).last, 'gems'),
-          :ext_dir => File.join(path, @libdir.split(File::SEPARATOR).last, 'gems')
+           # The proper bin directory for the :system and :local is always four levels above path
+          :bin_dir => File.realdirpath(File.join(path, [ ".." ] * 4, ConfigMap[:bindir].split(File::SEPARATOR).last)),
+          :gem_dir => path,
+           # The only difference between path and ext_dir is instead of share we need to look in lib/lib64 the rest
+           # of the path is the same
+          :ext_dir => File.join(path.gsub(/share/, @libdir.split(File::SEPARATOR).last), "gems")
         }]
       end]
     end
@@ -87,16 +73,8 @@ module Gem
     end
 
     def default_ext_dir_for base_dir
-      dir = if rpmbuild?
-        build_dir = base_dir.chomp Gem.default_dirs[:system][:gem_dir]
-        if build_dir != base_dir
-          File.join build_dir, Gem.default_dirs[:system][:ext_dir]
-        end
-      else
-        dirs = Gem.default_dirs.detect {|location, paths| paths[:gem_dir] == base_dir}
-        dirs && dirs.last[:ext_dir]
-      end
-      dir && File.join(dir, RbConfig::CONFIG['RUBY_INSTALL_NAME'])
+      dirs = Gem.default_dirs.detect {|location, paths| paths[:gem_dir] == base_dir}
+      dirs && dirs.last[:ext_dir]
     end
 
     # This method should be available since RubyGems 2.2 until RubyGems 3.0.

@@ -1,23 +1,30 @@
-# This is the ruby root folder.
-%ruby_libdir %{_datadir}/%{base_name}
-%ruby_libarchdir %{_libdir}/%{base_name}
+# Base install directories for standard Ruby libraries
+%ruby25_libdir_parent       %{_datadir}/ruby
+%ruby25_libarchdir_parent   %{_libdir}/ruby
+%ruby25_libdir              %{ruby25_libdir_parent}/2.5
+%ruby25_libarchdir          %{ruby25_libarchdir_parent}/2.5
 
-# This is the local lib/arch and should not be used for packaging.
-%ruby_sitedir site_ruby
-%ruby_sitelibdir %{_prefix}/local/share/%{base_name}/%{ruby_sitedir}
-%ruby_sitearchdir %{_prefix}/local/%{_lib}/%{base_name}/%{ruby_sitedir}
+%ruby25_hdrdir              %{_includedir}/ruby/2.5
 
-# This is the general location for libs/archs compatible with all
-# or most of the Ruby versions available in the Fedora repositories.
-%ruby_vendordir vendor_ruby
-%ruby_vendorlibdir %{ruby_libdir}/%{ruby_vendordir}
-%ruby_vendorarchdir %{ruby_libarchdir}/%{ruby_vendordir}
+# Local lib/arch for user installed libraries. Nothing should be
+# installed here by the vendor
+%ruby25_sitelibdir_parent   %{_prefix}/local/share/ruby/site_ruby
+%ruby25_sitelibdir          %{ruby25_sitelibdir_parent}/2.5
+%ruby25_sitearchdir         %{_prefix}/local/%{_lib}/ruby/site_ruby/2.5
+%ruby25_sitehdrdir          %{_prefix}/local/include/ruby/2.5
+
+# Vendor lib/arch for vendor installed libraries. Nothing should be
+# installed here by the user
+%ruby25_vendorlibdir_parent %{_datadir}/ruby/vendor_ruby
+%ruby25_vendorlibdir        %{ruby25_vendorlibdir_parent}/2.5
+%ruby25_vendorarchdir       %{_libdir}/ruby/vendor_ruby/2.5
+%ruby25_vendorhdrdir        %{ruby25_hdrdir}
 
 # For ruby packages we want to filter out any provides caused by private
-# libs in %%{ruby_vendorarchdir}/%%{ruby_sitearchdir}.
+# libs in %%{ruby25_vendorarchdir}/%%{ruby25_sitearchdir}.
 #
 # Note that this must be invoked in the spec file, preferably as
-# "%{?ruby_default_filter}", before any %description block.
-%ruby_default_filter %{expand: \
-%global __provides_exclude_from %{?__provides_exclude_from:%{__provides_exclude_from}|}^(%{ruby_vendorarchdir}|%{ruby_sitearchdir})/.*\\\\.so$ \
+# "%{?ruby25_default_filter}", before any %description block.
+%ruby25_default_filter %{expand: \
+%global __provides_exclude_from %{?__provides_exclude_from:%{__provides_exclude_from}|}^(%{ruby25_vendorarchdir}|%{ruby25_sitearchdir})/.*\\\\.so$ \
 }

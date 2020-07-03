@@ -1,6 +1,6 @@
-%define namesuffix 24
-%define rubysuffix 2.4
-%define gemdir %(/usr/bin/ruby%{rubysuffix} -rubygems -e 'puts Gem.respond_to?(:default_dirs) && Gem.default_dirs[:system] && Gem.default_dirs[:system][:gem_dir] || Gem::dir' 2>/dev/null)
+%define namesuffix 25
+%define rubysuffix 2.5
+%define gemdir %(/usr/bin/ruby%{rubysuffix} -e 'puts Gem.respond_to?(:default_dirs) && Gem.default_dirs[:system] && Gem.default_dirs[:system][:gem_dir] || Gem::dir' 2>/dev/null)
 %define gemname bundler
 %define geminstdir %{gemdir}/gems/%{gemname}-%{version}
 

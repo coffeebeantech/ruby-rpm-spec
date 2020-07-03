@@ -1,0 +1,16 @@
+diff -ru a/common.mk b/common.mk
+--- a/common.mk	2020-05-05 16:14:03.959700097 +0000
++++ b/common.mk	2020-05-05 16:15:10.092034541 +0000
+@@ -962,9 +962,9 @@
+ 		$(srcdir)/template/prelude.c.tmpl
+ 
+ $(PRELUDE_C): $(COMPILE_PRELUDE) \
+-	   $(PRELUDE_SCRIPTS)
++	   $(PRELUDE_SCRIPTS) $(PREP)
+ 	$(ECHO) generating $@
+-	$(Q) $(BASERUBY) $(srcdir)/tool/generic_erb.rb -I$(srcdir) -c -o $@ \
++	$(Q) $(MINIRUBY) $(srcdir)/tool/generic_erb.rb -I$(srcdir) -c -o $@ \
+ 		$(srcdir)/template/prelude.c.tmpl $(PRELUDE_SCRIPTS)
+ 
+ {$(VPATH)}golf_prelude.c: $(COMPILE_PRELUDE) {$(srcdir)}golf_prelude.rb
+Only in b: common.mk.orig

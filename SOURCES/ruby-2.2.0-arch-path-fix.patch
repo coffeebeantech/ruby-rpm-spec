@@ -1,0 +1,30 @@
+diff -ru a/configure.ac b/configure.ac
+--- a/configure.ac	2020-05-05 15:48:42.712178489 +0000
++++ b/configure.ac	2020-05-05 15:50:44.500780008 +0000
+@@ -4272,7 +4272,7 @@
+ 	    AS_HELP_STRING([--with-sitearchdir=DIR],
+ 			   [architecture dependent site libraries in DIR [[SITEDIR/SITEARCH]], "no" to disable site directory]),
+             [sitearchdir=$withval],
+-            [sitearchdir=${multiarch+'${rubysitearchprefix}/site_ruby'${ruby_version_suffix}}${multiarch-'${sitelibdir}/${sitearch}'}])
++            [sitearchdir=${multiarch+'${rubysitearchprefix}/site_ruby'${ruby_version_suffix}}${multiarch-'${rubylibprefix}/site_ruby'${ruby_version_suffix}'/${sitearch}'}])
+ 
+ AC_ARG_WITH(vendordir,
+ 	    AS_HELP_STRING([--with-vendordir=DIR], [vendor libraries in DIR [[RUBY_LIB_PREFIX/vendor_ruby]], "no" to disable vendor directory]),
+@@ -4284,7 +4284,7 @@
+ 	    AS_HELP_STRING([--with-vendorarchdir=DIR],
+ 			   [architecture dependent vendor libraries in DIR [[VENDORDIR/SITEARCH]], "no" to disable vendor directory]),
+             [vendorarchdir=$withval],
+-            [vendorarchdir=${multiarch+'${rubysitearchprefix}/vendor_ruby/${ruby_version}'}${multiarch-'${vendorlibdir}/${sitearch}'}])
++            [vendorarchdir=${multiarch+'${rubyarchprefix}/vendor_ruby/${ruby_version}'}${multiarch-'${rubylibprefix}/vendor_ruby/${ruby_version}/${sitearch}'}])
+ 
+ AC_ARG_WITH(rubygemsdir,
+            AS_HELP_STRING([--with-rubygemsdir=DIR], [custom rubygems directory]),
+@@ -4385,7 +4385,7 @@
+ 	    AS_HELP_STRING([--with-vendorarchhdrdir=DIR],
+ 			   [architecture dependent core vendor headers in DIR [[RUBYHDRDIR/vendor_ruby]]]),
+ 	    [vendorarchhdrdir=$withval],
+-	    [vendorarchhdrdir=${multiarch+'${sitearchincludedir}/${RUBY_VERSION_NAME}/vendor_ruby'}${multiarch-'${vendorhdrdir}/${sitearch}'}])
++            [vendorarchhdrdir=${multiarch+'${vendorarchincludedir}/${RUBY_VERSION_NAME}/vendor_ruby'}${multiarch-'${vendorhdrdir}/${sitearch}'}])
+ 
+ AC_SUBST(rubyhdrdir)dnl
+ AC_SUBST(sitehdrdir)dnl

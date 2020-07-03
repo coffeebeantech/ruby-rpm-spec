@@ -13,7 +13,7 @@ Release: 1%{?dist}
 Group: Development/Libraries
 License: MIT
 URL: http://gembundler.com
-Source: http://rubygems.org/downloads/bundler-%{version}.gem
+Source: https://rubygems.org/downloads/bundler-%{version}.gem
 Requires: rubygems%{namesuffix}
 BuildRequires: sed
 BuildRequires: rubygems%{namesuffix}

@@ -4,11 +4,10 @@
 %define gemname bundler
 %define geminstdir %{gemdir}/gems/%{gemname}-%{version}
 
-
 Summary: Bundler gem
 Name: rubygem%{namesuffix}-%{gemname}
 
-Version: 1.17.3
+Version: 2.2.12
 Release: 1%{?dist}
 Group: Development/Libraries
 License: MIT
@@ -26,17 +25,13 @@ Provides: rubygem-%{gemname} = %{version}-%{release}
 %description
 Bundler maintains a consistent environment for ruby applications. It tracks an application's code and the rubygems it needs to run, so that an application will always have the exact gems (and versions) that it needs to run.
 
-
-
 %prep
 %setup -c -T
-
 
 %build
 mkdir -p .%{gemdir}
 echo %{gemdir}
 gem%{rubysuffix} install -V --local --install-dir "`pwd`/%{gemdir}" --force --rdoc %{SOURCE0}
-
 
 %install
 rm -rf %{buildroot}
@@ -53,10 +48,8 @@ mv %{buildroot}%{gemdir}/bin/* %{buildroot}%{_bindir}
 find %{buildroot}%{_bindir} -type f | xargs -n 1 sed -i -e 's"^#!/usr/bin/env ruby"#!%{_bindir}/ruby%{rubysuffix}"'
 rmdir %{buildroot}%{gemdir}/bin
 
-
 %clean
 rm -rf %{buildroot}
-
 
 %files
 %defattr(-, root, root, -)
@@ -66,9 +59,7 @@ rm -rf %{buildroot}
 %{geminstdir}/lib
 %{geminstdir}/exe
 %doc %{geminstdir}/*.md
-%doc %{geminstdir}/man
 %{gemdir}/cache/%{gemname}-%{version}.gem
 %{gemdir}/specifications/%{gemname}-%{version}.gemspec
-
 
 %changelog

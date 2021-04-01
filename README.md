@@ -14,9 +14,13 @@ Move the repository contents for an directory like that:
 
     /home/ec2-user/packaging/ruby-rpm-spec
 
-And run rpmbuild:
+And run rpmbuild to build Ruby:
 
     cd /home/ec2-user/packaging/ruby-rpm-spec && rm -rf BUILDROOT/* BUILD/* RPMS/x86_64/* RPMS/noarch/* && cd SPECS/ && rpmbuild -ba --buildroot=/home/ec2-user/packaging/ruby-rpm-spec/BUILDROOT --define='_topdir /home/ec2-user/packaging/ruby-rpm-spec' --sign ruby25.spec
+
+Or Bundler:
+
+    cd /home/ec2-user/packaging/ruby-rpm-spec && rm -rf BUILDROOT/* BUILD/* RPMS/x86_64/* RPMS/noarch/* && cd SPECS/ && rpmbuild -ba --buildroot=/home/ec2-user/packaging/ruby-rpm-spec/BUILDROOT --define='_topdir /home/ec2-user/packaging/ruby-rpm-spec' --sign rubygem-bundler.spec  
 
 **Important**: if you try to rebuild the spec with the generated ruby and rubygems RPMs already installed on the system, you'll get and error regarding the gems directory. In this case, you need first to remove the RPMs and then build and install the new ones. There is some compatibility issue building this spec with the packages already installed. If you know why please tell me :)
 
@@ -26,6 +30,6 @@ And run rpmbuild:
 
 # Sources
 
-This spec is based on Fedora's spec available on http://pkgs.fedoraproject.org/cgit/ruby.git/.
+This spec is based on Fedora's spec available on https://src.fedoraproject.org/rpms/ruby.
 
 Also, it has been used the spec of the latest ruby rpm available on Amazon's repositories.

@@ -2,11 +2,11 @@
 
 This spec is an attempt to keep Ruby updated to the latest stable version available and to be used on [Amazon Linux AMI](https://aws.amazon.com/amazon-linux-ami/).
 
-It specifies a new set of Ruby RPMs using a suffix, like ruby25-2.5.8-1.0.1.amzn1.x86_64.rpm (and executables ruby2.5). It allows to install a new ruby version keeping old versions running at the same time.
+It specifies a new set of Ruby RPMs using a suffix, like ruby25-2.5.9-1.0.1.amzn1.x86_64.rpm (and executables ruby2.5). It allows to install a new ruby version keeping old versions running at the same time.
 
 # What is the current version?
 
-Ruby 2.5.8
+Ruby 2.5.9
 
 # How to build?
 
@@ -26,7 +26,7 @@ Or Bundler:
 
 # How to install?
 
-    sudo rpm -ivh noarch/rubygem25-rdoc-6.0.1.1-1.0.1.amzn1.noarch.rpm x86_64/* noarch/rubygems25-2.7.6.2-1.0.1.amzn1.noarch.rpm noarch/ruby25-irb-2.5.8-1.0.1.amzn1.noarch.rpm
+    sudo rpm -ivh noarch/rubygem25-rdoc-6.0.1.1-1.0.1.amzn1.noarch.rpm x86_64/* noarch/rubygems25-2.7.6.3-1.0.1.amzn1.noarch.rpm noarch/ruby25-irb-2.5.9-1.0.1.amzn1.noarch.rpm
 
 # Sources
 

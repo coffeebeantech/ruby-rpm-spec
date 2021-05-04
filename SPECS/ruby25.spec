@@ -16,7 +16,7 @@
 
 %global major_version 2
 %global minor_version 5
-%global teeny_version 8
+%global teeny_version 9
 
 # Ruby 2.0 is the default version in AL, at priority 2000.
 %global priority 243
@@ -35,7 +35,7 @@
 %global release 1
 
 # Bundled libraries versions
-%global rubygems_version 2.7.6.2
+%global rubygems_version 2.7.6.3
 %global molinillo_version 0.5.7
 
 # TODO: The IRB has strange versioning. Keep the Ruby's versioning ATM.
@@ -185,6 +185,9 @@ Patch103: ruby-2.4.1-remove-win32-tests.patch
 Patch104: ruby-2.4.1-disable-rinda-multicast-checks.patch
 ### Patch105: 0001-Update-net-test-SSL-key-cert-fixture.patch
 Patch106: 0001-gem-install-test-fix.patch
+
+# Custom Patches
+Patch900: ruby-2.5.9-fix-test-https-get.patch
 
 Requires: %{name}-libs%{?_isa} = %{version}-%{release}
 Requires: ruby%{base_ver}(rubygems) >= %{rubygems_version}
@@ -595,6 +598,7 @@ Tcl/Tk interface for the object-oriented scripting language Ruby.
 %patch104 -p1
 ### %patch105 -p1
 %patch106 -p1
+%patch900 -p1
 
 # Provide an example of usage of the tapset:
 cp -a %{SOURCE3} .
@@ -1130,7 +1134,7 @@ fi
 %{gem_dir}/specifications/default/sdbm-1.0.0.gemspec
 %{gem_dir}/specifications/default/stringio-0.0.1.gemspec
 %{gem_dir}/specifications/default/strscan-1.0.0.gemspec
-%{gem_dir}/specifications/default/webrick-1.4.2.gemspec
+%{gem_dir}/specifications/default/webrick-1.4.2.1.gemspec
 %{gem_dir}/specifications/default/zlib-1.0.0.gemspec
 
 %files -n rubygems%{base_ver}-devel

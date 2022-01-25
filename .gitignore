@@ -1,0 +1,8 @@
+/BUILD/*
+!/BUILD/.git*
+/BUILDROOT/*
+!/BUILDROOT/.git*
+/RPMS/*
+!/RPMS/.git*
+/SRPMS/*
+!/SRPMS/.git*

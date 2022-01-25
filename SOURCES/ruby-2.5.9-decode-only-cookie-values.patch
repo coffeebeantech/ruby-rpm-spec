@@ -1,0 +1,28 @@
+diff --git a/lib/cgi/cookie.rb b/lib/cgi/cookie.rb
+index a2155edb77..009566bb92 100644
+--- a/lib/cgi/cookie.rb
++++ b/lib/cgi/cookie.rb
+@@ -165,7 +165,6 @@ def self.parse(raw_cookie)
+       raw_cookie.split(/;\s?/).each do |pairs|
+         name, values = pairs.split('=',2)
+         next unless name and values
+-        name = CGI.unescape(name)
+         values ||= ""
+         values = values.split('&').collect{|v| CGI.unescape(v,@@accept_charset) }
+         if cookies.has_key?(name)
+diff --git a/test/cgi/test_cgi_cookie.rb b/test/cgi/test_cgi_cookie.rb
+index 115a57e4a1..985cc0d7a1 100644
+--- a/test/cgi/test_cgi_cookie.rb
++++ b/test/cgi/test_cgi_cookie.rb
+@@ -101,6 +101,11 @@ def test_cgi_cookie_parse
+     end
+   end
+ 
++  def test_cgi_cookie_parse_not_decode_name
++    cookie_str = "%66oo=baz;foo=bar"
++    cookies = CGI::Cookie.parse(cookie_str)
++    assert_equal({"%66oo" => ["baz"], "foo" => ["bar"]}, cookies)
++  end
+ 
+   def test_cgi_cookie_arrayinterface
+     cookie = CGI::Cookie.new('name1', 'a', 'b', 'c')

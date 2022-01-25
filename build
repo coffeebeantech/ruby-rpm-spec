@@ -1,0 +1,34 @@
+#!/bin/sh -e
+
+
+basedir="`dirname "$0"`" || exit 3
+basedir="`cd "$basedir" && pwd`" || exit 3
+
+topdir="$basedir"
+default_spec="$basedir/SPECS/ruby25.spec"
+default_b_opt=-ba
+
+
+show_usage() {
+    echo "Usage: `basename "$0"` [OPTION]... [SPECFILE]..."
+    echo "       `basename "$0"` -ba|-bb|-bp|-bc|-bi|-bl|-bs [OPTION]... [SPECFILE].."
+}
+
+
+b_opt="$default_b_opt" opts=()
+while [ $# -gt 0 -a "${1:0:1}" = - ]; do
+    case "$1" in
+    -h|--help) show_usage; exit 0;;
+    -ba|-bb|-bp|-bc|-bi|-bl|-bs) b_opt="$1"; shift;;
+    --clean) opts[${#opts[*]}]="$1"; shift;;
+    --) shift; break;;
+    *) echo "Unrecognized option: $1" >&2; show_usage >&2; exit 2;;
+    esac
+done
+
+if [ $# -eq 0 ]; then
+    set -- "$default_spec" || exit 3
+fi
+
+
+exec rpmbuild -D "_topdir $topdir" "$b_opt" "${opts[@]}" -- "$@" || exit 3

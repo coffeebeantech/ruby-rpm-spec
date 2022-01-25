@@ -1,4 +1,4 @@
-%define _buildid .1
+%define _buildid .2
 
 %bcond_with X11
 %bcond_with doc_capi # without
@@ -188,6 +188,8 @@ Patch106: 0001-gem-install-test-fix.patch
 
 # Custom Patches
 Patch900: ruby-2.5.9-fix-test-https-get.patch
+Patch901: ruby-2.5.9-decode-only-cookie-values.patch
+Patch902: ruby-2.5.9-limit-length-of-date-strings.patch
 
 Requires: %{name}-libs%{?_isa} = %{version}-%{release}
 Requires: ruby%{base_ver}(rubygems) >= %{rubygems_version}
@@ -599,6 +601,8 @@ Tcl/Tk interface for the object-oriented scripting language Ruby.
 ### %patch105 -p1
 %patch106 -p1
 %patch900 -p1
+%patch901 -p1
+%patch902 -p1
 
 # Provide an example of usage of the tapset:
 cp -a %{SOURCE3} .
